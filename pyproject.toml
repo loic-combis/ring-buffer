@@ -1,6 +1,6 @@
 [project]
 name = "shm-ring-buffer"
-version = "1.0.1"
+version = "1.1.0"
 description = "A versatile, high-performance ring buffer implementation for Python supporting standard lists, NumPy arrays, and shared memory for inter-process communication."
 authors = [
     {name = "Loïc Combis", email = "combis.loic@gmail.com"}
@@ -8,7 +8,7 @@ authors = [
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.11"
-keywords = ["ring-buffer", "circular-buffer", "shared-memory", "ipc", "numpy", "zero-copy", "multiprocessing"]
+keywords = ["ring-buffer", "circular-buffer", "shared-memory", "ipc", "numpy", "cupy", "gpu", "zero-copy", "multiprocessing"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -36,6 +36,7 @@ packages = [{include = "ring_buffer", from = "src"}]
 
 [project.optional-dependencies]
 numpy = ["numpy>=1.23.2"]
+cupy = ["cupy-cuda12x>=13.0.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

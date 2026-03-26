@@ -62,7 +62,7 @@ Release: You must call `.release()` after processing to signal that the slot is 
 ## 🗺️ Roadmap
 - [x] High-performance multiprocessing.shared_memory implementation.
 
-- [ ] CuPy implementation for hardware acceleration via NVIDIA GPUs (CUDA).
+- [x] CuPy implementation for hardware acceleration via NVIDIA GPUs (CUDA).
 
 ## 👥 Authors
 - Loïc Combis - [GitHub](https://github.com/loic-combis) | [LinkedIn](https://www.linkedin.com/in/lo%C3%AFc-combis-a211a813a/)

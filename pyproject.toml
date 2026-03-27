@@ -1,6 +1,6 @@
 [project]
 name = "shm-ring-buffer"
-version = "1.2.0"
+version = "1.2.1"
 description = "A versatile, high-performance ring buffer implementation for Python supporting standard lists, NumPy arrays, and shared memory for inter-process communication."
 authors = [
     {name = "Loïc Combis", email = "combis.loic@gmail.com"}

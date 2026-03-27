@@ -11,10 +11,10 @@ except ImportError:
 
 from typing import Optional
 
-from ring_buffer.base_ring_buffer import BaseRingBuffer
+from ring_buffer.abstract_ring_buffer import RingBuffer
 
 
-class CupyRingBuffer(BaseRingBuffer[cp.ndarray]):
+class CupyRingBuffer(RingBuffer[cp.ndarray]):
     def __init__(self,
                 slots: int,
                 dtype: cp.dtype,
@@ -33,6 +33,10 @@ class CupyRingBuffer(BaseRingBuffer[cp.ndarray]):
         # Allocate a single contiguous GPU memory block
         self._mem = cp.cuda.alloc(item_size * self._slots)
 
+        # Store indices in CUDA memory as int64 scalars
+        self._r_idx_gpu = cp.int64(0)
+        self._w_idx_gpu = cp.int64(0)
+
         self._elts: list[cp.ndarray] = []
 
         # Pre-allocate cupy views into the GPU buffer
@@ -46,6 +50,25 @@ class CupyRingBuffer(BaseRingBuffer[cp.ndarray]):
 
             self._elts.append(view)
 
+    @property
+    def _r_idx(self) -> int:
+        """Get current read index from CUDA memory."""
+        return int(self._r_idx_gpu)
+
+    @_r_idx.setter
+    def _r_idx(self, value: int) -> None:
+        """Set current read index in CUDA memory."""
+        self._r_idx_gpu = cp.int64(value)
+
+    @property
+    def _w_idx(self) -> int:
+        """Get current write index from CUDA memory."""
+        return int(self._w_idx_gpu)
+
+    @_w_idx.setter
+    def _w_idx(self, value: int) -> None:
+        """Set current write index in CUDA memory."""
+        self._w_idx_gpu = cp.int64(value)
 
     def _write(self, index: int, data: cp.ndarray) -> None:
         """
